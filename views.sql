@@ -14,19 +14,19 @@ ORDER BY views DESC;
 
 CREATE VIEW count_requests
 AS
-SELECT to_char(date(time), 'Mon DD, YYYY') AS date, count(status) AS totals
+SELECT to_char(date(time), 'Mon DD, YYYY') AS day, count(status) AS totals
 FROM log
-GROUP BY date;
+GROUP BY day;
 
 CREATE VIEW count_errors
 AS
-SELECT to_char(date(time), 'Mon DD, YYYY') AS date, count(status) AS errors
+SELECT to_char(date(time), 'Mon DD, YYYY') AS day, count(status) AS errors
 FROM log
 WHERE status != '200 OK'
-GROUP BY date;
+GROUP BY day;
 
 CREATE VIEW errorpct
 AS
-SELECT (ce.errors::numeric / cr.totals::numeric * 100)::numeric(7,1) as pct, ce.date
+SELECT (ce.errors::numeric / cr.totals::numeric * 100)::numeric(7,1) as pct, ce.day
 FROM count_errors ce
-JOIN count_requests cr ON ce.date = cr.date;
+JOIN count_requests cr ON ce.day = cr.day;

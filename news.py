@@ -45,7 +45,7 @@ def get_errors():
     # Open cursor for database operations:
     cur = db.cursor()
     # Execute query:
-    cur.execute("select date, pct from errorpct where pct > 1 order by date;")
+    cur.execute("select day, pct from errorpct where pct > 1 order by day;")
     # Return results:
     return cur.fetchall()
     # Close cursor and database connection:
