@@ -3,7 +3,9 @@ The included news.py program is a reporting tool to query the data in the "news"
 
 ### Dependencies
 [Python](https://www.python.org)
+
 [PostgreSQL](https://www.postgresql.org/)
+
 [Psycopg2](http://initd.org/psycopg/)
 
 ### Installation
