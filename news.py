@@ -2,55 +2,40 @@
 import psycopg2
 
 
+# name of our database:
 DBNAME = "news"
-
+# Init database connection:
+db = psycopg2.connect(database=DBNAME)
+# Init database cursor
+cur = db.cursor()
 
 def get_top_articles():
-    # Connect to database and retrieve the top 3 articles by total views
+    # Query database and retrieve the top 3 articles by total views
 
-    # Initialize database connection
-    db = psycopg2.connect(database=DBNAME)
-    # Open cursor for database operations:
-    cur = db.cursor()
     # Execute query:
-    cur.execute("select title, views from top_articles limit 3;")
+    cur.execute("SELECT title, views FROM top_articles LIMIT 3;")
     # Return results:
     return cur.fetchall()
-    # Close cursor and database connection:
-    cur.close()
-    db.close()
 
 
 def get_top_authors():
-    # Connect to database and retrieve the top authors by total views
+    # Query database and retrieve the top authors by total views
 
     # Initialize database connection
     db = psycopg2.connect(database=DBNAME)
-    # Open cursor for database operations:
-    cur = db.cursor()
     # Execute query:
     cur.execute("select name, views from top_authors;")
     # Return results:
     return cur.fetchall()
-    # Close cursor and database connection:
-    cur.close()
-    db.close()
 
 
 def get_errors():
-    # Connect to database and retrieve the dates on which errors exceeded 1%:
+    # Query database and retrieve the dates on which errors exceeded 1%:
 
-    # Initialize database connection
-    db = psycopg2.connect(database=DBNAME)
-    # Open cursor for database operations:
-    cur = db.cursor()
     # Execute query:
     cur.execute("select day, pct from errorpct where pct > 1 order by day;")
     # Return results:
     return cur.fetchall()
-    # Close cursor and database connection:
-    cur.close()
-    db.close()
 
 
 print ("The three most popular articles of all time are: \n")
@@ -68,3 +53,7 @@ print("\n")
 print ("Days on which errors exceeded 1%: \n")
 for days in get_errors():
     print(days[0] + " - " + str(days[1]) + "% errors")
+
+# Close cursor and database connection:
+cur.close()
+db.close()
